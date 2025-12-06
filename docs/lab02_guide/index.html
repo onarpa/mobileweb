@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKU Campus Guide - แนะนำสถานที่ภายในมหาวิทยาลัยขอนแก่น.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS Reset & Base Styles --- */
+        * {
+            box-sizing: border-box; /* Apply Box Model globally [cite: 204] */
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* --- Header & Canvas Animation [cite: 365] --- */
+        header {
+            background-color: #A73B24; /* KKU Color tone */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        canvas {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        /* --- Navigation [cite: 91] --- */
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center; /* Flexbox centering [cite: 230] */
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s; /* Transition effect [cite: 297] */
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        /* --- Main Content [cite: 64] --- */
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .student-info {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #A73B24;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* --- Grid Layout for Places [cite: 261] --- */
+        .places-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile first: 1 column */
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* --- Article Card Styling (Box Model) [cite: 204] --- */
+        article.place-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        article.place-card:hover {
+            transform: translateY(-5px); /* Simple hover animation */
+        }
+
+        article.place-card h3 {
+            color: #A73B24;
+            margin-top: 0;
+        }
+
+        .image-gallery {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        /* --- Form Styling [cite: 97, 215] --- */
+        .contact-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form input, form textarea, form button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        form button {
+            background-color: #A73B24;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background 0.3s;
+        }
+
+        form button:hover {
+            background-color: #8a2f1d;
+        }
+
+        /* --- Footer [cite: 96] --- */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        /* --- Responsive Design (Media Queries) [cite: 329] --- */
+        @media (min-width: 768px) {
+            /* Tablet & Desktop: Switch grid to 2 columns */
+            .places-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            header {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+                padding: 10px 40px;
+            }
+
+            canvas {
+                margin-bottom: 0;
+                margin-right: 20px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            /* Large Desktop: Switch grid to 4 columns */
+            .places-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center;">
+            <canvas id="logoCanvas" width="100" height="100"></canvas>
+            <div>
+                <h1 style="margin: 0;">KKU Campus Guide</h1>
+                <p style="margin: 0; opacity: 0.9;">มหาวิทยาลัยขอนแก่น</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">หน้าหลัก</a></li>
+            <li><a href="#places">สถานที่น่าสนใจ</a></li>
+            <li><a href="#recommend">แนะนำสถานที่</a></li>
+        </ul>
+    </nav>
+
+    <main id="home">
+        <section class="student-info">
+            <h2>ข้อมูลผู้จัดทำ</h2>
+            <p><strong>ชื่อ-สกุล:</strong> อรอาภา เหล่าชัย</p>
+            <p><strong>รหัสนักศึกษา:</strong> 663380245-3</p>
+        </section>
+
+        <section id="places">
+            <h2 style="text-align: center; margin-bottom: 30px;">สถานที่ยอดนิยมใน มข.</h2>
+            
+            <div class="places-grid">
+                <article class="place-card">
+                    <h3>อาคารวิทยวิภาส</h3>
+                    <p>อาคารวิทยวิภาสเป็นอาคารเรียนรวมขนาดใหญ่ที่สำคัญของมหาวิทยาลัยขอนแก่น ตั้งอยู่บริเวณศูนย์กลางการศึกษา 
+                    เป็นแหล่งรวมห้องบรรยาย ห้องปฏิบัติการ และห้องทำงานของคณะต่าง ๆ 
+                    เป็นสถานที่ที่นักศึกษาส่วนใหญ่คุ้นเคยและใช้ในการเรียนการสอนพื้นฐาน
+                    สถาปัตยกรรมของอาคารมีความทันสมัยและเป็นเอกลักษณ์ มีพื้นที่เปิดโล่งและทางเดินเชื่อมต่อที่สะดวกต่อการสัญจรภายในอาคาร 
+                    และยังเป็นจุดนัดพบที่สำคัญของนักศึกษาอีกด้วย</p>
+                    <div class="image-gallery">
+                        <img src="https://kku.ac.th/wp-content/uploads/2019/12/14.jpg" alt="ภาพภายนอกอาคารวิทยวิภาส มหาวิทยาลัยขอนแก่น">
+                        <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRJ0z-o72xAER5WsewBntkQvzQSA6yfTeEWbI6e9Aa2-rRtFfTF" alt="ภาพโถงภายในอาคารวิทยวิภาส">
+                    </div>
+                </article>
+
+                <article class="place-card">
+                    <h3>ศูนย์ประชุมอเนกประสงค์กาญจนาภิเษก</h3>
+                    <p>ศูนย์ประชุมฯ แห่งนี้เป็นสถานที่จัดกิจกรรมขนาดใหญ่ระดับชาติและระดับนานาชาติของมหาวิทยาลัย 
+                    เป็นศูนย์กลางการจัดงานพิธีพระราชทานปริญญาบัตร งานประชุมวิชาการ นิทรรศการ และกิจกรรมสำคัญอื่น ๆ 
+                    ตัวอาคารมีความสง่างาม โอ่อ่า และเป็นสัญลักษณ์ของความเจริญก้าวหน้าของมหาวิทยาลัยขอนแก่น 
+                    มีพื้นที่กว้างขวาง ทั้งห้องประชุมหลัก ห้องย่อย และพื้นที่จัดแสดงสินค้า มีการออกแบบที่คำนึงถึงการใช้งานที่หลากหลาย</p>
+                    <div class="image-gallery">
+                        <img src="https://asset.kku.ac.th/wp-content/uploads/2025/02/2025-02-04_08-51-31_488661.png" alt="ภาพมุมสูงของศูนย์ประชุมอเนกประสงค์กาญจนาภิเษก">
+                        <img src="https://asset.kku.ac.th/wp-content/uploads/2025/02/2025-02-04_08-51-21_489028.jpg" alt="ภาพภายในห้องประชุมหลักของศูนย์ประชุมอเนกประสงค์กาญจนาภิเษก">
+                    </div>
+                </article>
+
+                <article class="place-card">
+                    <h3>บึงศรีฐาน</h3>
+                    <p>บึงศรีฐาน เปรียบเสมือนปอดของมหาวิทยาลัยขอนแก่น เป็นบึงน้ำขนาดใหญ่ที่ใช้ในการกักเก็บน้ำ 
+                    และเป็นพื้นที่พักผ่อนหย่อนใจและออกกำลังกายของนักศึกษา บุคลากร และประชาชนทั่วไป 
+                    บริเวณรอบบึงมีเส้นทางสำหรับวิ่งและปั่นจักรยาน มีทิวทัศน์ที่สวยงาม ร่มรื่น และมีอากาศบริสุทธิ์ 
+                    นอกจากนี้ยังเป็นสถานที่จัดกิจกรรมสำคัญ เช่น งานลอยกระทง KKU Hues Art Festival และงานวิ่งมาราธอนต่าง ๆ</p>
+                    <div class="image-gallery">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8mveNagdRSxnQVvJru6X7RDmaLw0DjeFMWw&s" alt="ภาพวิวบึงศรีฐานและทางวิ่งออกกำลังกาย">
+                        <img src="https://cms.dmpcdn.com/ugcarticle/2020/02/03/ddcac7b0-1658-11ec-bf85-1bca4c7f474f_original.jpg" alt="ภาพกิจกรรมลอยกระทงที่บึงศรีฐาน">
+                    </div>
+                </article>
+
+                <article class="place-card">
+                    <h3>ศูนย์อาหารและบริการ 1 (คอมเพล็กซ์)</h3>
+                    <p>ศูนย์อาหารและบริการ 1 หรือที่รู้จักกันในนาม **"คอมเพล็กซ์"** เป็นแหล่งรวมร้านอาหารและร้านค้าบริการที่ใหญ่ที่สุดแห่งหนึ่งในมหาวิทยาลัย 
+                    ตั้งอยู่ใจกลางพื้นที่การศึกษา เป็นจุดศูนย์รวมของนักศึกษาและบุคลากรในช่วงเวลาพัก 
+                    มีอาหารหลากหลายชนิด ราคาประหยัด รวมถึงร้านสะดวกซื้อ ร้านถ่ายเอกสาร และบริการอื่น ๆ 
+                    เพื่ออำนวยความสะดวกในการใช้ชีวิตประจำวันของนักศึกษาในมหาวิทยาลัย</p>
+                    <div class="image-gallery">
+                        <img src="https://asset.kku.ac.th/wp-content/uploads/2022/04/%E0%B8%A8%E0%B8%B9%E0%B8%99%E0%B8%A2%E0%B9%8C%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3-1-%E0%B8%84%E0%B8%AD%E0%B8%A1%E0%B9%80%E0%B8%9E%E0%B8%A5%E0%B9%87%E0%B8%81%E0%B8%8B%E0%B9%8C-%E0%B8%99.%E0%B8%AA.%E0%B8%88%E0%B8%B8%E0%B8%91%E0%B8%B2%E0%B8%A3%E0%B8%B1%E0%B8%95%E0%B8%99%E0%B9%8C-%E0%B8%AA%E0%B8%B2%E0%B8%A2%E0%B8%AA%E0%B8%81%E0%B8%B8%E0%B8%A5-5-1024x768.jpg" alt="ภาพมุมกว้างของศูนย์อาหารคอมเพล็กซ์">
+                        <img src="https://asset.kku.ac.th/wp-content/uploads/2022/04/%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99%E0%B8%AA%E0%B8%94%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%99-15-%E0%B8%9A%E0%B8%B2%E0%B8%97%E0%B8%A1%E0%B8%B5%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%84%E0%B8%AD%E0%B8%A1%E0%B9%80%E0%B8%9E%E0%B8%A5%E0%B9%87%E0%B8%81%E0%B8%8B%E0%B9%8C-300x225.jpg" alt="ภาพร้านค้าและบริการต่างๆ ในอาคารคอมเพล็กซ์">
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="recommend" class="contact-section">
+            <h2 style="text-align: center;">แนะนำสถานที่ใหม่</h2>
+            <form action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+
+                <label for="place_name">ชื่อสถานที่:</label>
+                <input type="text" id="place_name" name="place_name" placeholder="กรุณาป้อนชื่อสถานที่" required>
+
+                <label for="details">รายละเอียด:</label>
+                <textarea id="details" name="details" rows="4" placeholder="บรรยายรายละเอียดเกี่ยวกับสถานที่" required></textarea>
+
+                <label for="image_url">URL ของภาพ:</label>
+                <input type="url" id="image_url" name="image_url" placeholder="https://example.com/image.jpg">
+
+                <button type="submit">ส่งข้อมูลแนะนำ</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 KKU Campus Guide by Onarpa Laochai.</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('logoCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        let radius = 10;
+        let growing = true;
+
+        function drawLogo() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw pulsing background circle
+            ctx.beginPath();
+            ctx.arc(canvas.width/2, canvas.height/2, radius + 25, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(167, 59, 36, 0.2)`; // KKU Color transparent
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw main circle
+            ctx.beginPath();
+            ctx.arc(canvas.width/2, canvas.height/2, 35, 0, Math.PI * 2);
+            ctx.fillStyle = '#A73B24'; // KKU Color
+            ctx.fill();
+            ctx.strokeStyle = '#FFD700'; // Gold border
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            ctx.closePath();
+
+            // Draw Text
+            ctx.font = 'bold 20px Sarabun';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('KKU', canvas.width/2, canvas.height/2);
+
+            // Animation Logic (Pulsing effect)
+            if (growing) {
+                radius += 0.5;
+                if (radius > 15) growing = false;
+            } else {
+                radius -= 0.5;
+                if (radius < 5) growing = true;
+            }
+
+            requestAnimationFrame(drawLogo);
+        }
+
+        // Start animation
+        drawLogo();
+    </script>
+</body>
+</html>
