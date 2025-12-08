@@ -57,6 +57,7 @@ function renderTable(elementId: string = "studentTableBody"): void {
   alert(`พบในสาขา: ${results.length} คน`);
 };
 
+
 // เพิ่มค้นหาด้วย Email
 (document.getElementById("searchEmailBtn") as HTMLButtonElement).onclick = () => {
   const keyword = (document.getElementById("searchEmail") as HTMLInputElement).value;
@@ -65,6 +66,5 @@ function renderTable(elementId: string = "studentTableBody"): void {
   alert(`ผลการค้นหา: ${results.length} คน`);
 };
 
+
 renderTable("studentTableBody");
-
-
