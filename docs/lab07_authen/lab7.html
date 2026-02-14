@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="th">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lab 7: Firebase Authentication</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            .screenshot-img {
+                max-width: 100%;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="text-center py-4 bg-light">
+            <h3>Lab 7: Firebase Authentication</h3>
+            <p>รายวิชา Mobile Web Application Development</p>
+            <p>
+                <strong>ผู้จัดทำ: </strong> อรอาภา เหล่าชัย <strong>รหัส: </strong> 663380245-3
+            </p>
+        </header>
+
+        <main class="container mt-4">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h4 class="text-primary border-bottom pb-2">รายละเอียดงาน</h4>
+                    <p>
+                        การพัฒนาแอปด้วย Ionic ร่วมกับ Firebase Authentication
+                    </p>
+                    <ul>
+                        <li>สร้างโปรเจกต์ Ionic (React/Vue) ด้วย TypeScript และ pnpm</li>
+                        <li>ตั้งค่า Firebase Authentication และ Provider ต่าง ๆ</li>
+                        <li>ออกแบบโครงสร้างโค้ดแบบ maintainable: modules / interfaces / services / state</li>
+                        <li>ทำหน้า Login (React หรือ Vue) ที่เรียกใช้ service เดียวกัน</li>
+                        <li>Build และรันบน Android ด้วย Capacitor + config ที่จำเป็น</li>
+                    </ul>
+                </div> 
+
+                <div class="col-12 mb-5">
+                    <h4 class="text-dark bg-light p-2 border-start border-primary border-4">1. หน้า Login </h4>
+                    <div class="row mt-3">
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="login_web.png" alt="ภาพหน้า Login ที่แสดงบน WebSite" class="screenshot-img">
+                                <figcaption class="fw-bold">ภาพหน้า Login ที่แสดงบน Website</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-5">
+                    <h4 class="text-dark bg-light p-2 border-start border-success border-4">2. หน้า Login Email/Password</h4>
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="loginemail_web.png" alt="ภาพหน้า Login Email/Password ที่แสดงบน WebSite" class="screenshot-img">
+                                <figcaption class="fw-bold">ภาพหน้า Login Email/Password ที่แสดงบน Website</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-5">
+                    <h4 class="text-dark bg-light p-2 border-start border-warning border-4">3. หน้า Login Google</h4>
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="logingoogle1_web.png" alt="ภาพหน้า Login Google (กรอก Email)" class="screenshot-img">
+                                <figcaption class="fw-bold">ภาพหน้า Login Google ที่แสดงบน Website (กรอก Email)</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="logingoogle2_web.png" alt="ภาพหน้า Login Google (กรอก Password)" class="screenshot-img">
+                                <figcaption class="fw-bold">ภาพหน้า Login Google ที่แสดงบน Website (กรอก Password)</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="logingoogle1_android.png" alt="ภาพหน้า Login Google (กรอก Email)" class="screenshot-img" style="max-width: 50%;">
+                                <figcaption class="fw-bold">ภาพหน้า Login Google ที่แสดงบน Android (กรอก Email)</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="logingoogle2_android.png" alt="ภาพหน้า Login Google (กรอก Password)" class="screenshot-img" style="max-width: 50%;">
+                                <figcaption class="fw-bold">ภาพหน้า Login Google ที่แสดงบน Android (กรอก Password)</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-5">
+                    <h4 class="text-dark bg-light p-2 border-start border-danger border-4">4. หน้า Login by Phone</h4>
+                    <div class="row mt-3">
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="loginphone1_web.png" alt="ภาพหน้า Login by Phone ที่แสดงบน Website (กรอกเบอร์โทรศัพท์)" class="screenshot-img">
+                                <figcaption class="fw-bold">ภาพหน้า Login by Phone ที่แสดงบน Website (กรอกเบอร์โทรศัพท์)</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="loginphone2_web.png" alt="ภาพหน้า Login by Phone ที่แสดงบน Website (กรอก OTP)" class="screenshot-img">
+                                <figcaption class="fw-bold">ภาพหน้า Login by Phone ที่แสดงบน Website (กรอก OTP)</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-5">
+                    <h4 class="text-dark bg-light p-2 border-start border-primary border-4">5. หน้าจอ Tab1 แสดงข้อมูล User </h4>
+                    <div class="row mt-3">
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="tab1web_email.png" alt="ภาพหน้าจอ Tab1 แสดงข้อมูล User ที่แสดงบน WebSite เมื่อกรอก Email" class="screenshot-img">
+                                <figcaption class="fw-bold">ภาพหน้าจอ Tab1 แสดงข้อมูล User ที่แสดงบน Website เมื่อกรอก Email</figcaption>
+                            </figure>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <figure>
+                                <img src="tab1web_phone.png" alt="ภาพหน้าจอ Tab1 แสดงข้อมูล User ที่แสดงบน WebSite เมื่อกรอก Phone" class="screenshot-img">
+                                <figcaption class="fw-bold">ภาพหน้าจอ Tab1 แสดงข้อมูล User ที่แสดงบน Website เมื่อกรอก Phone</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 text-center mt-4">
+                    <a href="docs/index.html" class="btn btn-secondary">กลับหน้าหลัก</a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center mt-5 mb-3 py-3 text-muted">
+            <p>© 2026 Onarpa Laochai - Mobile Web Application Development</p>
+        </footer>
+    </body>
+</html>
