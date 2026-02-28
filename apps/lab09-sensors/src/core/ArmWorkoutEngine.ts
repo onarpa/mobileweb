@@ -11,19 +11,23 @@ export class ArmWorkoutEngine {
   state: WorkoutState = {
     status: "IDLE",
     repDisplay: 0,
+    targetReps: 10,
     stats: {
       repsTotal: 0,
       repsOk: 0,
       repsBad: 0,
       score: 0,
       avgRepMs: 0,
+      lastMessage: "กด Start เพื่อเริ่ม"
     },
   };
 
   onChange(cb: (s: WorkoutState) => void) {
     this.listeners.add(cb);
     cb(this.clone());
-    return () => this.listeners.delete(cb);
+    return () => {
+      this.listeners.delete(cb); // ใส่ปีกกาครอบ เพื่อไม่ให้ return boolean ออกไป
+    };
   }
 
   private emit() {
@@ -35,16 +39,28 @@ export class ArmWorkoutEngine {
     return JSON.parse(JSON.stringify(this.state));
   }
 
+  // สำหรับกดปุ่ม + / - เพื่อตั้งค่าเป้าหมาย
+  setTargetReps(reps: number) {
+    // ให้เปลี่ยนค่าได้เฉพาะตอนที่ไม่ได้กด Start อยู่
+    if (this.state.status !== "RUNNING") {
+      this.state.targetReps = Math.max(1, reps); // บังคับให้เป้าหมายขั้นต่ำคือ 1
+      this.emit();
+    }
+  }
+
   start() {
+    const currentTarget = this.state.targetReps;
     this.state = {
       status: "RUNNING",
       repDisplay: 0,
+      targetReps: currentTarget,
       stats: {
         repsTotal: 0,
         repsOk: 0,
         repsBad: 0,
         score: 0,
         avgRepMs: 0,
+        lastMessage: "กำลังเริ่ม..."
       },
     };
     this.phase = "WAIT_UP";
@@ -53,6 +69,7 @@ export class ArmWorkoutEngine {
 
   stop() {
     this.state.status = "STOPPED";
+    this.state.stats.lastMessage = "หยุดการทำงาน";
     this.emit();
   }
 
@@ -115,6 +132,13 @@ export class ArmWorkoutEngine {
         this.phase = "WAIT_UP";
         this.peak = 0;
         this.valley = 0;
+
+        // ถ้าทำครบเป้าหมายแล้ว ให้หยุดอัตโนมัติ
+        if (this.state.repDisplay >= this.state.targetReps) {
+           this.state.status = "STOPPED";
+           this.state.stats.lastMessage = "สำเร็จ! ทำครบตามเป้าหมายแล้ว";
+        }
+
         this.emit();
       }
     }

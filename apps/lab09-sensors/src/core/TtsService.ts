@@ -2,15 +2,18 @@ import { TextToSpeech } from "@capacitor-community/text-to-speech";
 
 export class TtsService {
   async speak(text: string) {
-    await TextToSpeech.speak({
-      text,
-      lang: "th-TH",
-      rate: 1.0,
-    });
-  }
-
-  async stop() {
-    await TextToSpeech.stop();
+    try {
+      await TextToSpeech.speak({
+        text: text,
+        lang: 'th-TH', 
+        rate: 1.0,   
+        pitch: 1.0,
+        volume: 1.0,
+        category: 'ambient',
+      });
+    } catch (e) {
+      await TextToSpeech.speak({ text: "Task Started", lang: 'en-US' });
+    }
   }
 }
 
